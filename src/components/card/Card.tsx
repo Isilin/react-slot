@@ -6,7 +6,7 @@ export const Card = ({ children }: { children: React.ReactNode }) => {
   const footer = findSlotOfType(children, Card.Footer);
 
   return (
-    <div className="rounded-x2 shadow p-4 bg-black">
+    <div className="rounded-x2 shadow p-4 bg-black border-1">
       {header && <div className="mb-2">{header}</div>}
       {body && <div className="mb-2">{body}</div>}
       {footer && (
