@@ -1,10 +1,11 @@
 # Ignore artifacts:
 build
+dist
 coverage
 test
 node_modules
 public
-.next
+.storybook
 helm
 yarn.lock
 package-lock.json

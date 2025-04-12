@@ -1,54 +1,127 @@
-# React + TypeScript + Vite
+# 📦 Librairie de Composants React (Pattern Slot)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenue dans cette librairie de composants React ! Ce projet utilise le **pattern de slot** pour une composition flexible et puissante des interfaces utilisateur.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧪 Tester le projet
 
-## Expanding the ESLint configuration
+### 🛠️ Prérequis
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js (version recommandée : >=18.x)
+- Yarn ou npm
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+### 📥 Installation
+
+```bash
+npm install
+# ou
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### ✅ Vérifier le formatage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+```bash
+npm run format
+# ou
+yarn format
 ```
+
+Pour corriger automatiquement les erreurs de formatage :
+
+```bash
+npm run format:fix
+# ou
+yarn format:fix
+```
+
+### 🧹 Linter (ESLint)
+
+```bash
+npm run lint
+# ou
+yarn lint
+```
+
+### 📚 Lancer Storybook
+
+```bash
+npm run storybook
+# ou
+yarn storybook
+```
+
+Cela ouvrira Storybook sur [http://localhost:6006](http://localhost:6006), avec tous les composants de la librairie.
+
+---
+
+## 🧩 Le Pattern "Slot" en React
+
+Le **pattern de slot** est une approche inspirée du système de "slots" de Web Components ou de frameworks comme Vue ou Svelte. Il permet d’insérer dynamiquement du contenu dans un composant, tout en conservant une structure et une logique encapsulée.
+
+### 📘 Pourquoi utiliser des slots ?
+
+- Séparer **structure** et **contenu**
+- Créer des **composants réutilisables** et **composables**
+- Fournir des **points d'injection explicites** pour le contenu
+
+### 📦 Exemple : Composant `Card` avec slots
+
+```tsx
+// Card.tsx
+import { findSlotOfType } from '../../utils/slot';
+import { ReactNode } from 'react';
+
+export const Card = ({ children }: { children: React.ReactNode }) => {
+  const header = findSlotOfType(children, Card.Header);
+  const body = findSlotOfType(children, Card.Body);
+  const footer = findSlotOfType(children, Card.Footer);
+
+  return (
+    <div className={cx('card')}>
+      {header && <div>{header}</div>}
+      {body && <div>{body}</div>}
+      {footer && <div>{footer}</div>}
+    </div>
+  );
+};
+
+Card.Header = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+Card.Body = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+Card.Footer = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+```
+
+### 🧪 Utilisation
+
+```tsx
+// App.tsx
+export const App = () => {
+  return (
+    <Card>
+      <Card.Header>
+        <h2 className="text-lg font-bold">Titre</h2>
+      </Card.Header>
+      <Card.Body>
+        <p>Contenu principal de la carte</p>
+      </Card.Body>
+      <Card.Footer>
+        <p className="italic">Pied de carte</p>
+      </Card.Footer>
+    </Card>
+  );
+};
+```
+
+---
+
+## 📚 Ressources complémentaires
+
+- [React Composition Patterns – Kent C. Dodds](https://kentcdodds.com/blog/compound-components-with-react-hooks)
+- [What is the React Slots pattern ? - Neetigya Chahar](https://dev.to/neetigyachahar/what-is-the-react-slots-pattern-2ld9)
+- [Concevoir vos composants React avec des slots multiples - Maxime Steinhausser](https://www.elao.com/blog/dev/react-component-slots)
+- [Building Component Slots in React - Sandro Roth](https://sandroroth.com/blog/react-slots/)
+- [Storybook Docs](https://storybook.js.org/docs/react/get-started/introduction)
+
+---
+
+N’hésite pas à tester le composant dans Storybook pour mieux comprendre comment les slots sont utilisés !
