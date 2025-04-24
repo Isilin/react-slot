@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ComponentType, Fragment, isValidElement, ReactNode } from 'react';
 
 export const findSlotOfType = <T = unknown>(
   children: ReactNode,
@@ -16,4 +16,28 @@ export function findAllSlotsOfType<T = unknown>(
   return React.Children.toArray(children).filter(
     (child) => React.isValidElement(child) && child.type === type,
   ) as React.ReactElement<T>[];
-}
+};
+
+export function findOtherSlots = (
+  children: ReactNode,
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  ...excludedTypes: ComponentType<any>[]
+): ReactNode[] => {
+  const result: ReactNode[] = [];
+  const processChild = (child: ReactNode) => {
+    if (!isValidElement(child)) {
+      result.push(child);
+    }
+    else if (child.type === Fragment) {
+      React.children.forEach(child.props.children, processChild);
+    }
+    else if (excludedTypes.includes(child.type as ComponentType<unknown>)) {
+      return;
+    }
+    else {
+      result.push(child);
+    }
+  };
+  React.Children.forEach(children, processChild);
+  return result;
+};
