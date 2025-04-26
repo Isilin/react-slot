@@ -1,6 +1,28 @@
-# 📦 Librairie de Composants React (Pattern Slot)
+# 📦 React Slot Components
 
-Bienvenue dans cette librairie de composants React ! Ce projet utilise le **pattern de slot** pour une composition flexible et puissante des interfaces utilisateur.
+[![Storybook](https://img.shields.io/badge/Storybook-Live-purple?logo=storybook&logoColor=white)](https://isilin.github.io/react-slot/)
+[![Build Status](https://github.com/Isilin/react-slot/actions/workflows/deploy-storybook.yml/badge.svg)](https://github.com/Isilin/react-slot/actions/workflows/deploy-storybook.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Créez des composants React réutilisables avec des slots simples, typés et puissants.**
+
+---
+
+## 🗺️ Table des matières
+
+- [📦 React Slot Components](#-react-slot-components)
+  - [🗺️ Table des matières](#️-table-des-matières)
+  - [🧪 Tester le projet](#-tester-le-projet)
+    - [🛠️ Prérequis](#️-prérequis)
+    - [📚 Installer et lancer Storybook](#-installer-et-lancer-storybook)
+  - [🧩 Le Pattern "Slot" en React](#-le-pattern-slot-en-react)
+    - [📘 Pourquoi utiliser des slots ?](#-pourquoi-utiliser-des-slots-)
+    - [📦 Exemple : Composant `Card` avec slots](#-exemple--composant-card-avec-slots)
+    - [🧪 Utilisation](#-utilisation)
+  - [📚 Ressources complémentaires](#-ressources-complémentaires)
+  - [☕ Soutenir ce projet](#-soutenir-ce-projet)
+  - [🪪 Licence](#-licence)
+  - [🤝 Contribuer](#-contribuer)
 
 ---
 
@@ -11,84 +33,67 @@ Bienvenue dans cette librairie de composants React ! Ce projet utilise le **patt
 - Node.js (version recommandée : >=18.x)
 - Yarn ou npm
 
-### 📥 Installation
+### 📚 Installer et lancer Storybook
 
 ```bash
 npm install
+npm run dev
 # ou
 yarn install
+yarn dev
 ```
 
-### ✅ Vérifier le formatage
-
-```bash
-npm run format
-# ou
-yarn format
-```
-
-Pour corriger automatiquement les erreurs de formatage :
-
-```bash
-npm run format:fix
-# ou
-yarn format:fix
-```
-
-### 🧹 Linter (ESLint)
-
-```bash
-npm run lint
-# ou
-yarn lint
-```
-
-### 📚 Lancer Storybook
-
-```bash
-npm run storybook
-# ou
-yarn storybook
-```
-
-Cela ouvrira Storybook sur [http://localhost:6006](http://localhost:6006), avec tous les composants de la librairie.
-
----
+Cela ouvrira Storybook sur [http://localhost:6006](http://localhost:6006).
 
 ## 🧩 Le Pattern "Slot" en React
 
-Le **pattern de slot** est une approche inspirée du système de "slots" de Web Components ou de frameworks comme Vue ou Svelte. Il permet d’insérer dynamiquement du contenu dans un composant, tout en conservant une structure et une logique encapsulée.
+Le pattern de slot est une approche inspirée des bibliothèques avancées comme [Radix UI](https://www.radix-ui.com/) et [Headless UI](https://headlessui.dev/). Il permet d’insérer dynamiquement du contenu dans un composant, tout en conservant une structure et une logique encapsulée.
 
 ### 📘 Pourquoi utiliser des slots ?
 
-- Séparer **structure** et **contenu**
-- Créer des **composants réutilisables** et **composables**
-- Fournir des **points d'injection explicites** pour le contenu
+- D'avoir une API claire et déclarative
+- D'offrir une flexibilité totale aux utilisateurs du composant
+- D'ajouter ou retirer des parties optionnelles sans casser le composant
+- Séparer structure et contenu
+- Créer des composants réutilisables et composables
+- Fournir des points d'injection explicites pour le contenu
 
 ### 📦 Exemple : Composant `Card` avec slots
 
 ```tsx
 // Card.tsx
-import { findSlotOfType } from '../../utils/slot';
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
+import { defineSlotComponent, getSlots } from '../../lib';
 
-export const Card = ({ children }: { children: React.ReactNode }) => {
-  const header = findSlotOfType(children, Card.Header);
-  const body = findSlotOfType(children, Card.Body);
-  const footer = findSlotOfType(children, Card.Footer);
+import classNames from 'classnames/bind';
+import styles from './Card.module.css';
+const cx = classNames.bind(styles);
 
-  return (
-    <div className={cx('card')}>
-      {header && <div>{header}</div>}
-      {body && <div>{body}</div>}
-      {footer && <div>{footer}</div>}
-    </div>
-  );
-};
+export const Card = defineSlotComponent(
+  ({ children }: PropsWithChildren) => {
+    const { body, footer, header } = getSlots(children, Card);
 
-Card.Header = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-Card.Body = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-Card.Footer = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+    return (
+      <div className={cx('card')}>
+        {header && <div className={cx('card-header')}>{header}</div>}
+        {header && (body || footer) && <Card.Separator />}
+        {body && <div className={cx('card-body')}>{body}</div>}
+        {body && footer && <Card.Separator />}
+        {footer && <div className={cx('card-footer')}>{footer}</div>}
+      </div>
+    );
+  },
+  {
+    slots: {
+      header: ({ children }: PropsWithChildren) => <>{children}</>,
+      body: ({ children }: PropsWithChildren) => <>{children}</>,
+      footer: ({ children }: PropsWithChildren) => <>{children}</>,
+    },
+    extras: {
+      Separator: () => <span className={cx('separator')} />,
+    },
+  },
+);
 ```
 
 ### 🧪 Utilisation
@@ -98,21 +103,18 @@ Card.Footer = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 export const App = () => {
   return (
     <Card>
-      <Card.Header>
-        <h2 className="text-lg font-bold">Titre</h2>
-      </Card.Header>
+      <Card.Header>Ma jolie carte</Card.Header>
       <Card.Body>
-        <p>Contenu principal de la carte</p>
+        Ceci est le contenu principal de la carte. Tu peux y mettre n'importe
+        quoi : du texte, des images, ou même d'autres composants.
       </Card.Body>
-      <Card.Footer>
-        <p className="italic">Pied de carte</p>
-      </Card.Footer>
+      <Card.Footer>Dernière mise à jour : aujourd’hui.</Card.Footer>
     </Card>
   );
 };
 ```
 
----
+Sous le capot, chaque slot (`Header`, `Footer`, `Content`, etc.) est automatiquement détecté et positionné au bon endroit.
 
 ## 📚 Ressources complémentaires
 
@@ -122,6 +124,19 @@ export const App = () => {
 - [Building Component Slots in React - Sandro Roth](https://sandroroth.com/blog/react-slots/)
 - [Storybook Docs](https://storybook.js.org/docs/react/get-started/introduction)
 
----
-
 N’hésite pas à tester le composant dans Storybook pour mieux comprendre comment les slots sont utilisés !
+
+## ☕ Soutenir ce projet
+
+Si vous aimez ce projet, vous pouvez me soutenir sur Ko-fi ❤️
+
+[![Soutenir sur Ko-fi](https://img.shields.io/badge/Soutenir_sur_Ko--fi-F96400?logo=kofi&logoColor=white)](https://ko-fi.com/isilin)
+
+## 🪪 Licence
+
+Ce projet est sous licence [MIT](https://opensource.org/licenses/MIT).
+
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues !  
+N'hésitez pas à ouvrir une issue ou soumettre une pull request.
