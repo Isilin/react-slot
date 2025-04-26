@@ -8,12 +8,12 @@ type CardArgs = {
 };
 
 const meta: Meta<CardArgs> = {
-  title: 'Components/Card',
+  title: 'Card',
   component: Card,
   tags: ['autodocs'],
 };
-
 export default meta;
+
 type Story = StoryObj<CardArgs>;
 
 export const Playground: Story = {

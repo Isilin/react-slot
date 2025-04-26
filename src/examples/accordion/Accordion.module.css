@@ -1,0 +1,21 @@
+.container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.item {
+  border-top: 1px solid #eee;
+}
+
+.trigger {
+  padding: 12px;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+
+.content {
+  padding: 12px;
+  background: #fff;
+  color: black;
+}
