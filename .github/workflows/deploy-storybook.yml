@@ -25,9 +25,9 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
 
       - name: Deploy to GitHub Pages
         run: |
-          npx gh-pages -d storybook-static -u "github-actions[bot] <github-actions[bot]@users.noreply.github.com>" -r "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          npx gh-pages -d storybook-static -u "github-actions <github-actions@github.com>" -r "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
