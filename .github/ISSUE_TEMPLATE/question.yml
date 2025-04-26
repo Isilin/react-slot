@@ -1,0 +1,26 @@
+name: Ask a Question
+description: Ask a question about using react-slot or about the project.
+title: '[Question] : '
+labels: ['question']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for asking a question!  
+        Please make sure your question hasn't already been answered in the documentation or previous issues.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: Clearly describe your question.
+      placeholder: How can I use react-slot to...?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      description: Provide additional context that might help answer your question.
+      placeholder: Any relevant information...
+    validations:
+      required: false

@@ -1,0 +1,41 @@
+name: Bug Report
+description: Report a bug found in react-slot.
+title: '[Bug] : '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this bug!
+        Please provide as much information as possible to help us understand and fix the issue.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clearly describe the problem you are experiencing.
+      placeholder: Something is not working as expected...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Provide a clear list of steps to reproduce the issue.
+      placeholder: |
+        1. Go to...
+        2. Click on...
+        3. Observe the error...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Provide information about your environment (optional but helpful).
+      placeholder: |
+        - Operating System:
+        - Browser:
+        - react-slot version:
+        - React version:
+    validations:
+      required: false

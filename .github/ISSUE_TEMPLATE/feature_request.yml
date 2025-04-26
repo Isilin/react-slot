@@ -1,0 +1,28 @@
+name: Feature Request
+description: Suggest a new feature or improvement for react-slot.
+title: '[Feature] : '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to suggest a new idea!
+        Please try to explain your feature request clearly.
+  - type: textarea
+    id: proposition
+    attributes:
+      label: Feature Description
+      description: Describe the feature or improvement you are suggesting.
+      placeholder: |
+        I would like to see...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Problem it Solves
+      description: Explain why this feature would be useful (optional).
+      placeholder: |
+        This would help because...
+    validations:
+      required: false
