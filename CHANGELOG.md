@@ -9,6 +9,14 @@ This project also adheres to [Semantic Versioning (SemVer)](https://semver.org/l
 
 ## [Unreleased]
 
+- Nothing yet.
+
+---
+
+## [1.0.0] - 2025-04-27
+
+### Added
+
 - First stable release of the `react-slot` library.
 - Typed slot management system for React components.
 - Example components: `Card`, `ButtonGroup`, `List`, `Tabs`, `Accordion`.
@@ -17,14 +25,6 @@ This project also adheres to [Semantic Versioning (SemVer)](https://semver.org/l
 - Full documentation: README.md, CHANGELOG.md, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md.
 - GitHub workflows: build, Storybook deploy.
 - Project funding support via Ko-fi.
-
----
-
-## [1.0.0] - 2025-04-27
-
-### Added
-
-- Nothing yet.
 
 ---
 

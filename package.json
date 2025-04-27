@@ -1,7 +1,7 @@
 {
   "name": "@isilin/react-slot",
-  "private": true,
-  "version": "0.1.0",
+  "private": false,
+  "version": "1.0.0",
   "description": "Simple and powerful typed slots for React components",
   "author": "Isilin <isilinbn@gmail.com>",
   "license": "MIT",
