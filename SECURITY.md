@@ -2,20 +2,20 @@
 
 ## Supported Versions
 
-Nous maintenons uniquement la dernière version stable du projet.
+We only maintain the latest stable version of this project.
 
 ## Reporting a Vulnerability
 
-Si vous découvrez une vulnérabilité de sécurité dans ce projet :
+If you discover a security vulnerability in this project:
 
-- **Ne créez pas de ticket public.**
-- Merci de nous contacter directement en ouvrant une [Issue GitHub](https://github.com/Isilin/react-slot/issues/new) en utilisant la catégorie **Security** si disponible.
-- Si nécessaire, vous pouvez aussi contacter en privé via l'email associé au compte GitHub.
+- **Do not create a public issue.**
+- MPlease contact us directly by opening a [Github Issue](https://github.com/Isilin/react-slot/issues/new) using the **Security** category if available.
+- If needed, you can also reach out privately via the email associated with the GitHub account.
 
-Nous nous engageons à :
+We commit to:
 
-- Répondre dans un délai raisonnable (généralement sous 72h)
-- Analyser et corriger les failles critiques rapidement
-- Informer les utilisateurs via une mise à jour si nécessaire
+- Responding within a reasonable timeframe (usually within 72 hours)
+- Analyzing and addressing critical vulnerabilities promptly
+- Informing users through an update if necessary
 
-Merci de contribuer à la sécurité de l'écosystème open-source ! 🛡️
+Thank you for contributing to the security of the open-source ecosystem! 🛡️

@@ -1,11 +1,11 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/lib/index.ts'],
+  entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
   clean: true,
-  minify: false,
+  minify: true,
   external: ['react', 'react-dom'],
 });

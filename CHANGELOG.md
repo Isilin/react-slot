@@ -1,22 +1,30 @@
 # 📜 Changelog
 
-Toutes les modifications majeures de ce projet sont documentées dans ce fichier.
+All major changes to this project are documented in this file.
 
-Le format de ce fichier suit les conventions de [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).  
-Ce projet adhère également à la spécification de versionnage [SemVer](https://semver.org/lang/fr/).
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).  
+This project also adheres to [Semantic Versioning (SemVer)](https://semver.org/lang/fr/).
 
 ---
 
 ## [Unreleased]
 
-- Première version stable de la bibliothèque `react-slot`.
-- Système de gestion de slots typés pour composants React.
-- Composants d'exemples : `Card`, `ButtonGroup`, `List`, `Tabs`, `Accordion`.
-- Storybook configuré et déployé automatiquement sur GitHub Pages.
-- Publication sous licence MIT.
-- Ajout de ce fichier CHANGELOG.md.
+- First stable release of the `react-slot` library.
+- Typed slot management system for React components.
+- Example components: `Card`, `ButtonGroup`, `List`, `Tabs`, `Accordion`.
+- Storybook configuration with automatic deployment to GitHub Pages.
+- MIT License added.
+- Full documentation: README.md, CHANGELOG.md, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md.
+- GitHub workflows: build, Storybook deploy.
+- Project funding support via Ko-fi.
 
 ---
+
+## [1.0.0] - 2025-04-27
+
+### Added
+
+- Nothing yet.
 
 ---
 
