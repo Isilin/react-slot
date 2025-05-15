@@ -43,12 +43,13 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup",
+    "build": "tsup --config tsup.config.ts",
     "storybook": "storybook dev -p 6006",
     "dev": "npm run storybook",
     "build-storybook": "storybook build --output-dir storybook-static",
     "deploy-storybook": "yarn run build-storybook && gh-pages -d storybook-static",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:ci": "eslint . --ext .ts,.tsx --format json --output-file eslint_report.json"
   },
   "peerDependencies": {
     "react": "^19.0.0",
