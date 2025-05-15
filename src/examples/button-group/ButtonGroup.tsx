@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 
 import styles from './ButtonGroup.module.css';
 

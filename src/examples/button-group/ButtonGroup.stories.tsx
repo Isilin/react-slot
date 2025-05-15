@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Fragment } from 'react/jsx-runtime';
 
 import { ButtonGroup } from './ButtonGroup';
 
@@ -21,15 +22,13 @@ export const Playground: Story = {
   },
   render: ({ nbButtons }: GroupArgs) => (
     <ButtonGroup>
-      <ButtonGroup.Button>Button 1</ButtonGroup.Button>
-      <ButtonGroup.Button>Button 2</ButtonGroup.Button>
+      <ButtonGroup.Button key="1">Button 1</ButtonGroup.Button>
+      <ButtonGroup.Button key="2">Button 2</ButtonGroup.Button>
       {Array.from({ length: nbButtons }, (_, index) => (
-        <>
+        <Fragment key={(index + 1).toString()}>
           {index < 1 && <ButtonGroup.Divider />}
-          <ButtonGroup.Button key={index}>
-            Button {index + 3}
-          </ButtonGroup.Button>
-        </>
+          <ButtonGroup.Button>Button {index + 3}</ButtonGroup.Button>
+        </Fragment>
       ))}
     </ButtonGroup>
   ),

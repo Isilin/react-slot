@@ -31,7 +31,9 @@ export function defineSlotComponent<
   const { slots, extras, rules } = options;
   const componentName = getDisplayName(render);
 
-  const Comp = ((props: TProps) => render(props)) as any;
+  const Comp = ((props: TProps) => render(props)) as typeof render & {
+    [K in keyof TSlots as Capitalize<string & K>]: TSlots[K];
+  } & { slots: TSlots; rules?: Partial<SlotRules<TSlots>> } & TExtras;
   Comp.slots = slots;
 
   if (rules) {
@@ -41,7 +43,7 @@ export function defineSlotComponent<
   for (const [key, comp] of Object.entries(slots)) {
     const pascal = pascalCase(key);
     comp.displayName ||= `${componentName}.${pascal}`;
-    Comp[pascal] = comp;
+    (Comp as Record<string, unknown>)[pascal] = comp;
   }
 
   if (extras) {
