@@ -1,7 +1,8 @@
-import { ReactElement, ReactNode } from 'react';
-import { ExtraMap, SlotMap, SlotRules } from './types';
-import { getDisplayName } from './utils';
 import { pascalCase } from 'change-case';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
+
+import type { ExtraMap, SlotMap, SlotRules } from './types';
+import { getDisplayName } from './utils';
 
 interface DefineSlotComponentOptions<
   TSlots extends SlotMap,
@@ -12,10 +13,10 @@ interface DefineSlotComponentOptions<
   rules?: Partial<SlotRules<TSlots>>;
 }
 
-type NamedComponent<TProps = any> =
+type NamedComponent<TProps = Record<string, unknown>> =
   | ((props: TProps) => ReactElement)
-  | React.MemoExoticComponent<any>
-  | React.ForwardRefExoticComponent<any>;
+  | React.MemoExoticComponent<ComponentType<TProps>>
+  | React.ForwardRefExoticComponent<TProps>;
 
 export function defineSlotComponent<
   TProps extends {} = { children: ReactNode },

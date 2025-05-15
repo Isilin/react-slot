@@ -1,21 +1,29 @@
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
+import eslintPlugin from '@typescript-eslint/eslint-plugin';
+import eslintParser from '@typescript-eslint/parser';
+import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettierPlugin from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export default tseslint.config([
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default [
+  // Base JS/TS Configuration
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 'latest',
       sourceType: 'module',
-      parser: tseslint.parser,
+      parser: eslintParser,
       parserOptions: {
         project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
       },
       globals: {
         ...globals.browser,
@@ -23,21 +31,21 @@ export default tseslint.config([
       },
     },
     plugins: {
-      react,
+      '@typescript-eslint': eslintPlugin,
+      import: importPlugin,
+      prettier: prettierPlugin,
+      react: react,
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
-      storybook,
+      storybook: storybook,
     },
     rules: {
-      ...js.configs.recommended.rules,
-      ...tseslint.configs.recommendedTypeChecked[0].rules,
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.configs.recommended.rules,
-      ...storybook.configs.recommended.rules,
-
-      'react/react-in-jsx-scope': 'off', // Vite/React 17+
-      'no-unused-vars': 'off',
+      'no-console': 'warn',
+      'no-debugger': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/consistent-type-imports': 'warn',
+      '@typescript-eslint/consistent-type-definitions': ['warn', 'interface'],
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -47,6 +55,24 @@ export default tseslint.config([
           varsIgnorePattern: '^_',
         },
       ],
+      'react/react-in-jsx-scope': 'off', // React 17+ / Vite
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'import/order': [
+        'warn',
+        {
+          'newlines-between': 'always',
+          groups: [
+            ['builtin', 'external'],
+            ['internal'],
+            ['parent', 'sibling', 'index'],
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+      'import/no-unresolved': 'off',
+      'jsx-a11y/anchor-is-valid': 'warn',
+      'prettier/prettier': 'warn',
     },
     settings: {
       react: {
@@ -55,7 +81,36 @@ export default tseslint.config([
     },
   },
   {
+    // Configuration spécifique pour les fichiers de configuration
+    files: ['*.config.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // Configuration spécifique pour Storybook
+    files: ['.storybook/**/*.ts', '.storybook/**/*.tsx'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parser: eslintParser,
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+    plugins: {
+      storybook: storybook,
+    },
+    rules: {
+      'storybook/no-uninstalled-addons': 'warn',
+    },
+  },
+  {
     ignores: ['dist', 'node_modules', '**/*.d.ts'],
   },
-  prettier,
-]);
+];

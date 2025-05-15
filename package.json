@@ -47,8 +47,9 @@
     "build": "tsup",
     "storybook": "storybook dev -p 6006",
     "dev": "npm run storybook",
-    "build-storybook": "storybook build",
-    "deploy-storybook": "yarn run build-storybook && gh-pages -d storybook-static"
+    "build-storybook": "storybook build --output-dir storybook-static",
+    "deploy-storybook": "yarn run build-storybook && gh-pages -d storybook-static",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -66,26 +67,27 @@
     "@types/node": "^22.15.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
     "@vitejs/plugin-react": "^4.3.4",
     "classnames": "^2.5.1",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.1.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-storybook": "^0.12.0",
     "gh-pages": "^6.3.0",
+    "globals": "^16.1.0",
     "prettier": "^3.5.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "storybook": "^8.6.12",
     "tsup": "^8.0.0",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
+    "vite": "^6.2.0",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "engines": {
     "node": ">=20",

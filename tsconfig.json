@@ -3,6 +3,10 @@
     "target": "ES2023",
     "module": "ESNext",
     "declaration": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "declarationDir": "./dist",
     "outDir": "./dist",
 
@@ -15,6 +19,7 @@
 
     /* Linting */
     "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
@@ -22,5 +27,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", ".storybook/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,8 +1,11 @@
-import { PropsWithChildren, ReactElement, useState } from 'react';
-import { defineSlotComponent, getSlots } from '../../lib';
-
 import classNames from 'classnames/bind';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useState } from 'react';
+
 import styles from './Tabs.module.css';
+
+import { defineSlotComponent, getSlots } from '@/lib';
+
 const cx = classNames.bind(styles);
 
 type TriggerProps = PropsWithChildren<{

@@ -1,9 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+
 import { ButtonGroup } from './ButtonGroup';
 
-type GroupArgs = {
+interface GroupArgs {
   nbButtons: number;
-};
+}
 
 const meta: Meta<GroupArgs> = {
   title: 'ButtonGroup',
@@ -18,7 +19,7 @@ export const Playground: Story = {
   args: {
     nbButtons: 5,
   },
-  render: ({ nbButtons }) => (
+  render: ({ nbButtons }: GroupArgs) => (
     <ButtonGroup>
       <ButtonGroup.Button>Button 1</ButtonGroup.Button>
       <ButtonGroup.Button>Button 2</ButtonGroup.Button>

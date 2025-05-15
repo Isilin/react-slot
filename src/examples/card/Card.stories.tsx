@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { Card } from './Card';
 
-type CardArgs = {
+interface CardArgs {
   showHeader: boolean;
   showBody: boolean;
   showFooter: boolean;
-};
+}
 
 const meta: Meta<CardArgs> = {
   title: 'Card',
@@ -22,7 +23,7 @@ export const Playground: Story = {
     showBody: true,
     showFooter: true,
   },
-  render: ({ showHeader, showBody, showFooter }) => (
+  render: ({ showHeader, showBody, showFooter }: CardArgs) => (
     <Card>
       {showHeader && <Card.Header>Ma jolie carte</Card.Header>}
       {showBody && (

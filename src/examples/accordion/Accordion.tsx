@@ -1,14 +1,11 @@
-import {
-  PropsWithChildren,
-  ReactElement,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
-import { defineSlotComponent, getSlots } from '../../lib';
-
 import classNames from 'classnames/bind';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
 import styles from './Accordion.module.css';
+
+import { defineSlotComponent, getSlots } from '@/lib';
+
 const cx = classNames.bind(styles);
 
 type ItemProps = PropsWithChildren<{

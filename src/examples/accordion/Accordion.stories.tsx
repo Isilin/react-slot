@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { Accordion } from './Accordion';
 
-type AccordionArgs = {
+interface AccordionArgs {
   nbItems: number;
-};
+}
 
 const meta: Meta<AccordionArgs> = {
   title: 'Accordion',
@@ -18,7 +19,7 @@ export const Playground: Story = {
   args: {
     nbItems: 5,
   },
-  render: ({ nbItems }) => (
+  render: ({ nbItems }: AccordionArgs) => (
     <Accordion>
       {Array.from({ length: nbItems }, (_, index) => (
         <Accordion.Item key={`trigger_${index}`} value={`item${index + 1}`}>

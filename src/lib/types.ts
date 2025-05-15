@@ -1,4 +1,4 @@
-import { ComponentType, ReactElement, ReactNode } from 'react';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
 
 export type SlotComponent = ComponentType<any> & { displayName?: string };
 export type SlotMap = Record<string, SlotComponent>;
