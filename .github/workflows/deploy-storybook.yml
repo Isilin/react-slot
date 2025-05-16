@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   setup:
+    name: Setup the library
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -50,8 +51,12 @@ jobs:
         if: steps.cache_nodemodules.outputs.cache-hit != 'true'
         run: npm install --include=dev
   lint-and-check:
+    name: Lint & type check
     runs-on: ubuntu-latest
     needs: setup
+    permissions:
+      checks: write
+      pull-requests: read
     steps:
       - name: Restore node_modules
         uses: actions/cache@v4
@@ -75,15 +80,17 @@ jobs:
         continue-on-error: true
 
       - name: Type checking
-        run: npm run build
+        run: npm run typecheck:ci
         continue-on-error: true
 
       - name: Annotate
         uses: DerLev/eslint-annotations@v2
         with:
           eslint-report: eslint_report.json
-          typescript-log: dist/metafile-esm.json
+          typescript-log: typescript.log
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   deploy:
+    name: Deploy the storybook
     runs-on: ubuntu-latest
     needs: [setup, lint-and-check]
     if: github.ref == 'refs/heads/main'
@@ -106,7 +113,7 @@ jobs:
             .storybook/
 
       - name: Build Storybook
-        run: npm run build-storybook
+        run: npm run storybook:build
 
       - name: Configure git user
         run: |
