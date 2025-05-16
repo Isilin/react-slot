@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import React from 'react';
 
-import type { SlotComponent, SlotMap, SlotResult, SlotRules } from './types';
+import type { SlotComponent, SlotMap, SlotResult, SlotRules } from '../types';
 
 export function getSlots<
   T extends { slots: SlotMap; rules?: Partial<SlotRules<T['slots']>> },
