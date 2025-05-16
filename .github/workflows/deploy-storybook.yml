@@ -33,19 +33,11 @@ jobs:
         id: cache_nodemodules
         uses: actions/cache@v4
         with:
-          key: dependencies
+          key: dependencies-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
           path: |
-            node_modules/**/*
-            .prettierignore
-            .prettierrc
-            package.json
-            yarn.lock
-            eslint.config.js
-            tsconfig.json
-            tsup.config.ts
-            vite.config.mts
-            src/
-            .storybook/
+            node_modules/
 
       - name: Install dependencies
         if: steps.cache_nodemodules.outputs.cache-hit != 'true'
@@ -58,22 +50,20 @@ jobs:
       checks: write
       pull-requests: read
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          key: dependencies
+          key: dependencies-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
           path: |
-            node_modules/**/*
-            .prettierignore
-            .prettierrc
-            package.json
-            yarn.lock
-            eslint.config.js
-            tsconfig.json
-            tsup.config.ts
-            vite.config.mts
-            src/
-            .storybook/
+            node_modules/
 
       - name: Run ESLint
         run: npm run lint:ci
@@ -95,22 +85,20 @@ jobs:
     needs: [setup, lint-and-check]
     if: github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          key: dependencies
+          key: dependencies-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
           path: |
-            node_modules/**/*
-            .prettierignore
-            .prettierrc
-            package.json
-            yarn.lock
-            eslint.config.js
-            tsconfig.json
-            tsup.config.ts
-            vite.config.mts
-            src/
-            .storybook/
+            node_modules/
 
       - name: Build Storybook
         run: npm run storybook:build
