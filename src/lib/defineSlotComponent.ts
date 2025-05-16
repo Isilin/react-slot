@@ -1,7 +1,8 @@
-import { ReactElement, ReactNode } from 'react';
-import { ExtraMap, SlotMap, SlotRules } from './types';
-import { getDisplayName } from './utils';
 import { pascalCase } from 'change-case';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
+
+import type { ExtraMap, SlotMap, SlotRules } from './types';
+import { getDisplayName } from './utils';
 
 interface DefineSlotComponentOptions<
   TSlots extends SlotMap,
@@ -12,10 +13,10 @@ interface DefineSlotComponentOptions<
   rules?: Partial<SlotRules<TSlots>>;
 }
 
-type NamedComponent<TProps = any> =
+type NamedComponent<TProps = Record<string, unknown>> =
   | ((props: TProps) => ReactElement)
-  | React.MemoExoticComponent<any>
-  | React.ForwardRefExoticComponent<any>;
+  | React.MemoExoticComponent<ComponentType<TProps>>
+  | React.ForwardRefExoticComponent<TProps>;
 
 export function defineSlotComponent<
   TProps extends {} = { children: ReactNode },
@@ -30,7 +31,9 @@ export function defineSlotComponent<
   const { slots, extras, rules } = options;
   const componentName = getDisplayName(render);
 
-  const Comp = ((props: TProps) => render(props)) as any;
+  const Comp = ((props: TProps) => render(props)) as typeof render & {
+    [K in keyof TSlots as Capitalize<string & K>]: TSlots[K];
+  } & { slots: TSlots; rules?: Partial<SlotRules<TSlots>> } & TExtras;
   Comp.slots = slots;
 
   if (rules) {
@@ -40,7 +43,7 @@ export function defineSlotComponent<
   for (const [key, comp] of Object.entries(slots)) {
     const pascal = pascalCase(key);
     comp.displayName ||= `${componentName}.${pascal}`;
-    Comp[pascal] = comp;
+    (Comp as Record<string, unknown>)[pascal] = comp;
   }
 
   if (extras) {

@@ -1,9 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+
 import { Tabs } from './Tabs';
 
-type TabsArgs = {
+interface TabsArgs {
   nbTabs: number;
-};
+}
 
 const meta: Meta<TabsArgs> = {
   title: 'Tabs',
@@ -18,7 +19,7 @@ export const Playground: Story = {
   args: {
     nbTabs: 5,
   },
-  render: ({ nbTabs }) => (
+  render: ({ nbTabs }: TabsArgs) => (
     <Tabs>
       {Array.from({ length: nbTabs }, (_, index) => (
         <Tabs.Trigger key={`trigger_${index}`} value={`tab${index + 1}`}>

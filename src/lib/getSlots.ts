@@ -1,5 +1,7 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { SlotComponent, SlotMap, SlotResult, SlotRules } from './types';
+import type { ReactElement, ReactNode } from 'react';
+import React from 'react';
+
+import type { SlotComponent, SlotMap, SlotResult, SlotRules } from './types';
 
 export function getSlots<
   T extends { slots: SlotMap; rules?: Partial<SlotRules<T['slots']>> },
@@ -37,8 +39,8 @@ export function getSlots<
         (slots[matchKey] as ReactElement[]).push(child);
       } else {
         if (slots[matchKey] && process.env.NODE_ENV !== 'production') {
-          console.warn(
-            `Slot "${String(matchKey)}" was provided multiple times but is declared as single. Only the last one will be used.`,
+          throw new Error(
+            `Slot "${String(matchKey)}" was provided multiple times but is declared as single.`,
           );
         }
         slots[matchKey] = child;
@@ -48,5 +50,8 @@ export function getSlots<
     }
   });
 
-  return { ...(slots as Record<keyof T['slots'], any>), others };
+  return {
+    ...(slots as Record<keyof T['slots'], ReactElement | ReactElement[]>),
+    others,
+  };
 }
