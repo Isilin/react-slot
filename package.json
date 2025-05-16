@@ -43,13 +43,14 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
-    "storybook": "storybook dev -p 6006",
-    "dev": "npm run storybook",
-    "build-storybook": "storybook build --output-dir storybook-static",
-    "deploy-storybook": "yarn run build-storybook && gh-pages -d storybook-static",
+    "lib:build": "tsup --config tsup.config.ts",
+    "lib:dev": "tsup --config tsup.config.ts --watch",
+    "storybook:dev": "storybook dev -p 6006",
+    "storybook:build": "storybook build --output-dir storybook-static",
     "lint": "eslint . --ext .ts,.tsx",
-    "lint:ci": "eslint . --ext .ts,.tsx --format json --output-file eslint_report.json"
+    "lint:ci": "eslint . --ext .ts,.tsx --format json --output-file eslint_report.json",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck:ci": "tsc --project tsconfig.json --noEmit > typescript.log"
   },
   "peerDependencies": {
     "react": "^19.0.0",

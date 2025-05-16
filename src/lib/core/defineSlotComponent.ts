@@ -1,8 +1,8 @@
 import { pascalCase } from 'change-case';
 import type { ComponentType, ReactElement, ReactNode } from 'react';
 
-import type { ExtraMap, SlotMap, SlotRules } from './types';
-import { getDisplayName } from './utils';
+import type { ExtraMap, SlotMap, SlotRules } from '../types';
+import { getDisplayName } from '../utils/getDisplayName';
 
 interface DefineSlotComponentOptions<
   TSlots extends SlotMap,

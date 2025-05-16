@@ -22,7 +22,7 @@ export const Playground: Story = {
   render: ({ nbItems }: ListArgs) => (
     <List>
       {Array.from({ length: nbItems }, (_, index) => (
-        <List.Item key={index}>Item {index + 1}</List.Item>
+        <List.Item>Item {index + 1}</List.Item>
       ))}
     </List>
   ),

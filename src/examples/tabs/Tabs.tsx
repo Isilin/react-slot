@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import styles from './Tabs.module.css';
 
@@ -9,11 +9,13 @@ import { defineSlotComponent, getSlots } from '@/lib';
 const cx = classNames.bind(styles);
 
 type TriggerProps = PropsWithChildren<{
-  value: string;
+  key?: string;
+  value?: string;
 }>;
 
 type ContentProps = PropsWithChildren<{
-  value: string;
+  key?: string;
+  value?: string;
 }>;
 
 export const Tabs = defineSlotComponent(
@@ -48,8 +50,12 @@ export const Tabs = defineSlotComponent(
   },
   {
     slots: {
-      trigger: ({ children }: TriggerProps) => <>{children}</>,
-      content: ({ children }: ContentProps) => <>{children}</>,
+      trigger: ({ children, key }: TriggerProps) => (
+        <Fragment key={key}>{children}</Fragment>
+      ),
+      content: ({ children, key }: ContentProps) => (
+        <Fragment key={key}>{children}</Fragment>
+      ),
     },
     rules: {
       trigger: 'multiple',

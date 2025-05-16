@@ -24,7 +24,7 @@ export const List = defineSlotComponent(
   },
   {
     slots: {
-      item: ({ children }) => <>{children}</>,
+      item: ({ children }: PropsWithChildren) => <>{children}</>,
     },
     rules: {
       item: 'multiple',
