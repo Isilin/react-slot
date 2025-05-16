@@ -1,6 +1,6 @@
 import type { ComponentType, ReactElement, ReactNode } from 'react';
 
-export type SlotComponent = ComponentType<never> & { displayName?: string };
+export type SlotComponent<P = {}> = ComponentType<P> & { displayName?: string };
 export type SlotMap = Record<string, SlotComponent>;
 export type ExtraMap = Record<string, unknown>;
 

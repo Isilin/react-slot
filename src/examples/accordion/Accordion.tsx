@@ -9,7 +9,7 @@ import { defineSlotComponent, getSlots } from '@/lib';
 const cx = classNames.bind(styles);
 
 type ItemProps = PropsWithChildren<{
-  value: string;
+  value?: string;
   openItem?: string | null;
   setOpenItem?: (value: string | null) => void;
 }>;
@@ -24,7 +24,7 @@ const Item = defineSlotComponent(
 
     const isOpen = useMemo(() => openItem === value, [value, openItem]);
     const toggle = useCallback(
-      () => setOpenItem?.(isOpen ? null : value),
+      () => setOpenItem?.(isOpen ? null : (value ?? '')),
       [value, setOpenItem, isOpen],
     );
 
