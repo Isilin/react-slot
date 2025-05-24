@@ -1,7 +1,13 @@
 import { pascalCase } from 'change-case';
-import type { ComponentType, ReactElement, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import type { ExtraMap, SlotMap, SlotRules } from '../types';
+import type {
+  ExtraMap,
+  NamedComponent,
+  SlotEnhancedComponent,
+  SlotMap,
+  SlotRules,
+} from '../types';
 import { getDisplayName } from '../utils/getDisplayName';
 
 interface DefineSlotComponentOptions<
@@ -13,11 +19,6 @@ interface DefineSlotComponentOptions<
   rules?: Partial<SlotRules<TSlots>>;
 }
 
-type NamedComponent<TProps = Record<string, unknown>> =
-  | ((props: TProps) => ReactElement)
-  | React.MemoExoticComponent<ComponentType<TProps>>
-  | React.ForwardRefExoticComponent<TProps>;
-
 export function defineSlotComponent<
   TProps extends {} = { children: ReactNode },
   TSlots extends SlotMap = {},
@@ -25,26 +26,27 @@ export function defineSlotComponent<
 >(
   render: NamedComponent<TProps>,
   options: DefineSlotComponentOptions<TSlots, TExtras>,
-): typeof render & {
-  [K in keyof TSlots as Capitalize<string & K>]: TSlots[K];
-} & { slots: TSlots; rules?: Partial<SlotRules<TSlots>> } & TExtras {
+): SlotEnhancedComponent<TProps, typeof render, TSlots, TExtras> {
   const { slots, extras, rules } = options;
   const componentName = getDisplayName(render);
 
-  const Comp = ((props: TProps) => render(props)) as typeof render & {
-    [K in keyof TSlots as Capitalize<string & K>]: TSlots[K];
-  } & { slots: TSlots; rules?: Partial<SlotRules<TSlots>> } & TExtras;
+  const Comp = ((props: TProps) => render(props)) as SlotEnhancedComponent<
+    TProps,
+    typeof render,
+    TSlots,
+    TExtras
+  >;
   Comp.slots = slots;
 
   if (rules) {
     Comp.rules = options.rules;
   }
 
-  for (const [key, comp] of Object.entries(slots)) {
+  Object.entries(slots).forEach(([key, comp]) => {
     const pascal = pascalCase(key);
     comp.displayName ||= `${componentName}.${pascal}`;
     (Comp as Record<string, unknown>)[pascal] = comp;
-  }
+  });
 
   if (extras) {
     Object.assign(Comp, extras);

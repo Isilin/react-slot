@@ -1,21 +1,27 @@
 import type { ReactElement, ReactNode } from 'react';
 import React from 'react';
 
-import type { SlotComponent, SlotMap, SlotResult, SlotRules } from '../types';
+import type {
+  SlotComponent,
+  SlotHost,
+  SlotMap,
+  SlotResult,
+  SlotRules,
+} from '../types';
 
-export function getSlots<
-  T extends { slots: SlotMap; rules?: Partial<SlotRules<T['slots']>> },
->(children: ReactNode, slotHost: T): SlotResult<T['slots']> {
+export function getSlots<TSlots extends SlotMap>(
+  children: ReactNode,
+  slotHost: SlotHost<TSlots>,
+): SlotResult<TSlots> {
   const slotComponents = slotHost.slots;
-  const rules: Partial<SlotRules<T['slots']>> = slotHost.rules ?? {};
-  const slots: Partial<
-    Record<keyof T['slots'], ReactElement | ReactElement[]>
-  > = {};
+  const rules: Partial<SlotRules<TSlots>> = slotHost.rules ?? {};
+  const slots: Partial<Record<keyof TSlots, ReactElement | ReactElement[]>> =
+    {};
   const others: ReactNode[] = [];
 
   for (const key in slotComponents) {
-    if (rules?.[key as keyof T['slots']] === 'multiple') {
-      slots[key as keyof T['slots']] = [];
+    if (rules?.[key as keyof TSlots] === 'multiple') {
+      slots[key as keyof TSlots] = [];
     }
   }
 
@@ -31,7 +37,7 @@ export function getSlots<
       ([, slotComponent]) =>
         childType === slotComponent ||
         childType.displayName === slotComponent.displayName,
-    )?.[0] as keyof T['slots'] | undefined;
+    )?.[0] as keyof TSlots | undefined;
 
     if (matchKey) {
       const rule = rules?.[matchKey] ?? 'single';
@@ -51,7 +57,7 @@ export function getSlots<
   });
 
   return {
-    ...(slots as Record<keyof T['slots'], ReactElement | ReactElement[]>),
+    ...(slots as Record<keyof TSlots, ReactElement | ReactElement[]>),
     others,
   };
 }
