@@ -4,24 +4,22 @@ interface DisplayNamed {
   type?: unknown;
 }
 
-function extractDisplayName(
-  from: DisplayNamed | undefined,
-): string | undefined {
-  if (!from) return undefined;
-
-  if (typeof from.displayName === 'string') return from.displayName;
-  if (typeof from.name === 'string') return from.name;
-
-  if (typeof from.type === 'function') {
-    const type = from.type as DisplayNamed;
-    return extractDisplayName(type);
+function extractDisplayName(from: unknown): string | undefined {
+  if (
+    typeof from !== 'function' &&
+    (typeof from !== 'object' || from === null)
+  ) {
+    return undefined;
   }
 
-  if (typeof from.type === 'object' && from.type !== null) {
-    return extractDisplayName(from.type as DisplayNamed);
-  }
+  const maybe = from as DisplayNamed;
 
-  return undefined;
+  if (typeof maybe.displayName === 'string') return maybe.displayName;
+  if (typeof maybe.name === 'string') return maybe.name;
+
+  const nested = (maybe as { type?: unknown }).type;
+
+  return extractDisplayName(nested);
 }
 
 export function getDisplayName(component: unknown): string {
