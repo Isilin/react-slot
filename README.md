@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@isilin/react-slot)](https://www.npmjs.com/package/@isilin/react-slot)
 [![Storybook](https://img.shields.io/badge/Storybook-Live-purple?logo=storybook&logoColor=white)](https://isilin.github.io/react-slot/)
 [![Build Status](https://github.com/Isilin/react-slot/actions/workflows/deploy-storybook.yml/badge.svg)](https://github.com/Isilin/react-slot/actions/workflows/deploy-storybook.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![codecov](https://codecov.io/gh/Isilin/react-slot/branch/main/graph/badge.svg)](https://codecov.io/gh/Isilin/react-slot)
 
 **Create reusable React components with simple, typed, and powerful slots.**
 
