@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import React from 'react';
 import { describe, expect, it } from 'vitest';
 
@@ -16,7 +17,7 @@ describe('getSlots', () => {
       slots: { header: Header },
     });
 
-    expect((result.header as any)?.type).toBe(Header);
+    expect((result.header as ReactElement)?.type).toBe(Header);
     expect(result.others).toHaveLength(0);
   });
 
