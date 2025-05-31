@@ -43,7 +43,7 @@ export function defineSlotComponent<
   }
 
   Object.entries(slots).forEach(([key, comp]) => {
-    const pascal = pascalCase(key);
+    const pascal = pascalCase(key, { mergeAmbiguousCharacters: true });
     comp.displayName ||= `${componentName}.${pascal}`;
     (Comp as Record<string, unknown>)[pascal] = comp;
   });
