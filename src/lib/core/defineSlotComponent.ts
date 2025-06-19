@@ -20,7 +20,7 @@ interface DefineSlotComponentOptions<
 }
 
 export function defineSlotComponent<
-  TProps extends {} = { children: ReactNode },
+  TProps extends object = { children?: ReactNode },
   TSlots extends SlotMap = {},
   TExtras extends ExtraMap = {},
 >(
@@ -30,7 +30,7 @@ export function defineSlotComponent<
   const { slots, extras, rules } = options;
   const componentName = getDisplayName(render);
 
-  const Comp = ((props: TProps) => render(props)) as SlotEnhancedComponent<
+  const Comp = render as SlotEnhancedComponent<
     TProps,
     typeof render,
     TSlots,
@@ -39,7 +39,7 @@ export function defineSlotComponent<
   Comp.slots = slots;
 
   if (rules) {
-    Comp.rules = options.rules;
+    Comp.rules = rules;
   }
 
   Object.entries(slots).forEach(([key, comp]) => {

@@ -1,4 +1,10 @@
-import type { ComponentType, ReactElement, ReactNode } from 'react';
+import type {
+  ComponentType,
+  ForwardRefExoticComponent,
+  MemoExoticComponent,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 export type SlotComponent<P = {}> = ComponentType<P> & { displayName?: string };
 export type SlotMap = Record<string, SlotComponent>;
@@ -17,13 +23,13 @@ export type SlotResult<T extends SlotMap> = {
   [K in keyof T]?: ReactElement | ReactElement[];
 } & { others: ReactNode[] };
 
-export type NamedComponent<TProps> =
-  | ((props: TProps) => ReactElement)
-  | React.MemoExoticComponent<ComponentType<TProps>>
-  | React.ForwardRefExoticComponent<TProps>;
+export type NamedComponent<TProps = unknown> =
+  | ((props: TProps) => ReactElement | null)
+  | MemoExoticComponent<(props: TProps) => ReactElement | null>
+  | ForwardRefExoticComponent<TProps>;
 
 export type SlotEnhancedComponent<
-  TProps extends Record<string, unknown>,
+  TProps extends object,
   TComponent extends NamedComponent<TProps>,
   TSlots extends SlotMap,
   TExtras extends ExtraMap = {},

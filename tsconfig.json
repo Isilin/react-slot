@@ -17,6 +17,8 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
 
+    "types": ["node", "@testing-library/jest-dom"],
+
     /* Linting */
     "strict": true,
     "esModuleInterop": true,
