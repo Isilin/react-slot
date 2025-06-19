@@ -1,11 +1,15 @@
 import classNames from 'classnames/bind';
-import { type PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 import styles from './ButtonGroup.module.css';
 
 import { defineSlotComponent, getSlots } from '@/lib';
 
 const cx = classNames.bind(styles);
+
+const MemoizedButton = memo(({ children }: PropsWithChildren) => (
+  <button className={cx('button')}>{children}</button>
+));
 
 export const ButtonGroup = defineSlotComponent(
   ({ children }: PropsWithChildren) => {
@@ -20,9 +24,7 @@ export const ButtonGroup = defineSlotComponent(
   },
   {
     slots: {
-      button: ({ children }: PropsWithChildren) => (
-        <button className={cx('button')}>{children}</button>
-      ),
+      button: MemoizedButton,
     },
     rules: {
       button: 'multiple',

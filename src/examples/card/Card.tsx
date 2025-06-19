@@ -29,6 +29,9 @@ export const Card = defineSlotComponent(
     },
     extras: {
       Separator: () => <span className={cx('separator')} />,
+      Badge: ({ label }: { label: string }) => (
+        <span className={cx('card-badge')}>{label}</span>
+      ),
     },
   },
 );
