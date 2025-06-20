@@ -33,7 +33,49 @@ export const Playground: Story = {
         </Card.Body>
       )}
       {showFooter && (
-        <Card.Footer>Dernière mise à jour : aujourd’hui.</Card.Footer>
+        <Card.Footer>
+          <button>Action</button>
+          Dernière mise à jour : aujourd’hui.
+        </Card.Footer>
+      )}
+    </Card>
+  ),
+};
+
+type CardWithExtraArgs = { showBadge: boolean } & CardArgs;
+type StoryExtra = StoryObj<CardWithExtraArgs>;
+
+export const WithExtra: StoryExtra = {
+  args: {
+    showHeader: true,
+    showBody: true,
+    showFooter: true,
+    showBadge: true,
+  },
+  render: ({
+    showHeader,
+    showBody,
+    showFooter,
+    showBadge,
+  }: CardWithExtraArgs) => (
+    <Card>
+      {showHeader && (
+        <Card.Header>
+          Ma jolie carte
+          {showBadge && <Card.Badge label="NEW" />}
+        </Card.Header>
+      )}
+      {showBody && (
+        <Card.Body>
+          Ceci est le contenu principal de la carte. Tu peux y mettre n'importe
+          quoi : du texte, des images, ou même d'autres composants.
+        </Card.Body>
+      )}
+      {showFooter && (
+        <Card.Footer>
+          <button>Action</button>
+          Dernière mise à jour : aujourd’hui.
+        </Card.Footer>
       )}
     </Card>
   ),

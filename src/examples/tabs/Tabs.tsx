@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { Fragment, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 
 import styles from './Tabs.module.css';
 
@@ -17,6 +17,10 @@ type ContentProps = PropsWithChildren<{
   key?: string;
   value?: string;
 }>;
+
+const SlotContent = memo(({ children, key }: ContentProps) => (
+  <Fragment key={key}>{children}</Fragment>
+));
 
 export const Tabs = defineSlotComponent(
   ({ children }: PropsWithChildren) => {
@@ -53,9 +57,7 @@ export const Tabs = defineSlotComponent(
       trigger: ({ children, key }: TriggerProps) => (
         <Fragment key={key}>{children}</Fragment>
       ),
-      content: ({ children, key }: ContentProps) => (
-        <Fragment key={key}>{children}</Fragment>
-      ),
+      content: SlotContent,
     },
     rules: {
       trigger: 'multiple',
