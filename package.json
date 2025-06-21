@@ -52,7 +52,8 @@
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck:ci": "tsc --project tsconfig.json --noEmit > typescript.log",
     "test:dev": "vitest --watch --coverage",
-    "test:ci": "vitest --coverage --reporter=junit"
+    "test:ci": "vitest --coverage --reporter=junit",
+    "prepare": "husky install",
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -63,6 +64,8 @@
     "react-is": "^18.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/react": "^8.6.14",
     "@storybook/react-vite": "^8.6.14",
@@ -89,6 +92,7 @@
     "eslint-plugin-storybook": "^0.12.0",
     "gh-pages": "^6.3.0",
     "globals": "^16.1.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "prettier": "^3.5.3",
     "react": "^19.1.0",

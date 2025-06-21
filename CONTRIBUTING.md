@@ -31,7 +31,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
     - [Your First Code Contribution](#your-first-code-contribution)
     - [Improving The Documentation](#improving-the-documentation)
   - [Styleguides](#styleguides)
-    - [Commit Messages](#commit-messages)
+    - [Commit Conventions](#commit-conventions)
   - [Join The Project Team](#join-the-project-team)
   - [Attribution](#attribution)
 
@@ -162,11 +162,24 @@ Updating, improving and correcting the documentation
 
 ## Styleguides
 
-### Commit Messages
+### Commit Conventions
 
-<!-- TODO
+Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 
--->
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Code style (formatting, missing semi colons, etc)
+- `refactor`: Code change that neither fixes a bug nor adds a feature
+- `test`: Adding missing tests
+- `chore`: Changes to the build process or tooling
+
+Examples:
+
+```git
+feat: add support for memo components
+fix: forwardRef type error in defineSlotComponent
+```
 
 ## Join The Project Team
 
