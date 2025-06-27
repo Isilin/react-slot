@@ -1,0 +1,53 @@
+changesDir: .changie
+versionFile: .version
+changelog: CHANGELOG.md
+versionExt: md
+headerPath: header.tpl.md
+unreleasedDir: unreleased
+versionFormat: '## {{.Version}} - {{.Time.Format "2006-01-02"}}'
+kindFormat: '### {{.Kind}}'
+changeFormat: '* {{.Body}}'
+kinds:
+  - key: build
+    label: Changed
+    auto: patch
+  - key: ci
+    label: Changed
+    auto: patch
+  - key: chore
+    label: Changed
+    auto: patch
+  - key: docs
+    label: Changed
+    auto: patch
+  - key: feat
+    label: Added
+    auto: minor
+  - key: fix
+    label: Fixed
+    auto: patch
+  - key: perf
+    label: Changed
+    auto: patch
+  - key: refactor
+    label: Changed
+    auto: patch
+  - key: revert
+    label: Changed
+    auto: patch
+  - key: style
+    label: Changed
+    auto: patch
+  - key: test
+    label: Changed
+    auto: patch
+  - key: security
+    label: Security
+    auto: major
+  - key: deprecated
+    label: Deprecated
+    auto: major
+  - key: breaking
+    label: Changed
+    auto: major
+    changeFormat: '* [!] {{.Custom.Body}}'

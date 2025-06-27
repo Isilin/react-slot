@@ -826,6 +826,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.5.0"
     "@vitest/coverage-v8": "npm:^3.1.4"
     change-case: "npm:^5.4.4"
+    changie: "npm:^1.22.0"
     classnames: "npm:^2.5.1"
     concurrently: "npm:^9.1.2"
     eslint: "npm:^9.26.0"
@@ -2486,6 +2487,15 @@ __metadata:
   version: 5.4.4
   resolution: "change-case@npm:5.4.4"
   checksum: 10c0/2a9c2b9c9ad6ab2491105aaf506db1a9acaf543a18967798dcce20926c6a173aa63266cb6189f3086e3c14bf7ae1f8ea4f96ecc466fcd582310efa00372f3734
+  languageName: node
+  linkType: hard
+
+"changie@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "changie@npm:1.22.0"
+  bin:
+    changie: npm/changie.js
+  checksum: 10c0/418855c658fce676b973438e96d8d2786a8ac17a7b6f929b89bf3121b9632e297ab8270dacb5e40970fb25e5682ff8aa6d0ce894c071e0a09d81dc0d619826bf
   languageName: node
   linkType: hard
 

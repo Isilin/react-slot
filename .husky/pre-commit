@@ -1,0 +1,62 @@
+#!/bin/sh
+
+MSG_FILE=".git/COMMIT_EDITMSG"
+COMMIT_MSG=$(cat "$MSG_FILE")
+COMMIT_TYPE=$(echo "$COMMIT_MSG" | cut -d':' -f1)
+
+# 1. Linter le message
+npx --no-install commitlint --edit "$MSG_FILE"
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "❌ Commit message invalid. Aborting commit."
+  exit $EXIT_CODE
+fi
+
+# 2. Vérifie s'il s'agit d'un amend
+IS_AMEND=false
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+  HEAD_HASH=$(git rev-parse HEAD)
+  HEAD_OLD_HASH=$(git reflog | grep -m1 'commit (amend):' | awk '{print $1}')
+
+  if [ "$HEAD_HASH" = "$HEAD_OLD_HASH" ]; then
+    IS_AMEND=true
+    echo "📝 Vous avez fait un commit --amend."
+    echo "💡 Pensez à mettre à jour ou recréer votre fichier changelog avec 'changie new'."
+  fi
+fi
+
+# 3. Vérifier que le type est valide selon changie
+case "$COMMIT_TYPE" in
+  feat!|refactor!)
+    COMMIT_TYPE="deprecated"
+    ;;
+  fix!|chore!)
+    COMMIT_TYPE="security"
+    ;;
+  *!)
+    COMMIT_TYPE="breaking"
+    ;;
+esac
+
+ALLOWED_KINDS="build ci chore docs feat fix perf refactor revert style test security deprecated breaking"
+IS_VALID=false
+
+for kind in $ALLOWED_KINDS; do
+  if [ "$kind" = "$COMMIT_TYPE" ]; then
+    IS_VALID=true
+    break
+  fi
+done
+
+if [ "$IS_VALID" = false ]; then
+  echo "❌ Commit type '$COMMIT_TYPE' is not declared in changie.yaml groups. Skipping changelog."
+  exit 1
+fi
+
+# 🧱 4. Créer une entrée changelog avec changie
+npx changie new --kind "$COMMIT_TYPE" --body "$COMMIT_MSG"
+CHANGE_FILE=$(find .changie/unreleased -type f -name '*.yaml' -print0 | xargs -0 ls -t | head -n 1)
+if [ -n "$CHANGE_FILE" ] && [ "$IS_AMEND" = false ]; then
+  git add "$CHANGE_FILE"
+fi

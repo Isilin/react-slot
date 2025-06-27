@@ -158,3 +158,47 @@ jobs:
       - name: Deploy to GitHub Pages
         run: |
           npx gh-pages -d storybook-static -u "github-actions <github-actions@github.com>" -r "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+  release:
+    name: Release package
+    runs-on: ubuntu-latest
+    needs: [setup, lint-and-check]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          key: dependencies-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            dependencies-${{ runner.os }}-
+          path: |
+            node_modules/
+
+      - name: Set changelog
+        run: npm run changelog:batch
+
+      - name: Commit & tag release
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git add CHANGELOG.md .version
+          git commit -m "chore(release): v$(cat .version)"
+          git tag "v$(cat .version)"
+          git push origin main --tags
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          name: v${{ steps.get_version.outputs.VERSION }}
+          body_path: CHANGELOG.md
+
+      - name: Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
